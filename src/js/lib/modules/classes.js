@@ -3,7 +3,7 @@ import $ from '../core';
 
 $.prototype.addClass = function(...classNames) {
 
-    if(typeof(classNames[0]) == 'string') {
+    if(typeof(classNames[classNames.length - 1]) == 'string') {
 
         for(let i = 0; i <this.length; i++ ) {
             if(!this[i].classList){
@@ -15,25 +15,25 @@ $.prototype.addClass = function(...classNames) {
 
 
 
-    } else if(isFinite(classNames[0])) {
+    } else if(isFinite(classNames[classNames.length - 1])) {
         
         let digits = [];
         let clases = [];
-        let prev = 0;
+        let prev = 'string';
         for(let value of classNames) {
-        if (isFinite(value) && isFinite(prev) ){
+        if (isFinite(value)){
 
             digits.push(+value);
             prev = value;
 
 
-        } else if (typeof(value) === 'string') {
+        } else if (typeof(value) === 'string' && typeof(prev) === 'string') {
 
             clases.push(value);
             prev = value;
 
 
-        } else if (isFinite(value) && typeof(prev) === 'string') {
+        } else if (isFinite(prev) && typeof(value) === 'string') {
 
             for(let digit of digits) {
                 if(!this[digit].classList){
@@ -42,8 +42,8 @@ $.prototype.addClass = function(...classNames) {
                 this[digit].classList.add(...clases);
             
             }
-            digits = [value];
-            clases = [];
+            digits = [];
+            clases = [value];
             prev = value;
 
 
@@ -81,7 +81,7 @@ $.prototype.addClass = function(...classNames) {
 
 $.prototype.removeClass = function(...classNames) {
 
-    if(typeof(classNames[0]) == 'string') {
+    if(typeof(classNames[classNames.length - 1]) == 'string') {
 
         for(let i = 0; i <this.length; i++ ) {
             if(!this[i].classList){
@@ -93,25 +93,25 @@ $.prototype.removeClass = function(...classNames) {
 
 
 
-    } else if(isFinite(classNames[0])) {
+    } else if(isFinite(classNames[classNames.length - 1])) {
         
         let digits = [];
         let clases = [];
-        let prev = 0;
+        let prev = 'string';
         for(let value of classNames) {
-        if (isFinite(value) && isFinite(prev) ){
+        if (isFinite(value)){
 
             digits.push(+value);
             prev = value;
 
 
-        } else if (typeof(value) === 'string') {
+        } else if (typeof(value) === 'string' && typeof(prev) === 'string') {
 
             clases.push(value);
             prev = value;
 
 
-        } else if (isFinite(value) && typeof(prev) === 'string') {
+        } else if (isFinite(prev) && typeof(value) === 'string') {
             for(let digit of digits) {
                 if(!this[digit].classList){
                     continue;
@@ -119,8 +119,8 @@ $.prototype.removeClass = function(...classNames) {
                 this[digit].classList.remove(...clases);
             
             }
-            digits = [value];
-            clases = [];
+            digits = [];
+            clases = [value];
             prev = value;
 
 
@@ -152,46 +152,52 @@ $.prototype.removeClass = function(...classNames) {
 
 $.prototype.toggleClass = function(...classNames) {
 
-    if(typeof(classNames[0]) == 'string') {
+    if(typeof(classNames[classNames.length - 1]) == 'string') {
 
         for(let i = 0; i <this.length; i++ ) {
             if(!this[i].classList){
                 continue;
             }
-            this[i].classList.toggle(...classNames);
+            for(let clas of classNames) {
+                this[i].classList.toggle(clas);
+            }
+
         
         }
 
 
 
-    } else if(isFinite(classNames[0])) {
+    } else if(isFinite(classNames[classNames.length - 1])) {
         
         let digits = [];
         let clases = [];
-        let prev = 0;
+        let prev = 'string';
         for(let value of classNames) {
-        if (isFinite(value) && isFinite(prev) ){
+        if (isFinite(value)){
 
             digits.push(+value);
             prev = value;
 
 
-        } else if (typeof(value) === 'string') {
+        } else if (typeof(value) === 'string' && typeof(prev) === 'string') {
 
             clases.push(value);
             prev = value;
 
 
-        } else if (isFinite(value) && typeof(prev) === 'string') {
+        } else if (isFinite(prev) && typeof(value) === 'string') {
             for(let digit of digits) {
                 if(!this[digit].classList){
                     continue;
                 }
-                this[digit].classList.toggle(...clases);
+                for(let clas of clases) {
+                    this[digit].classList.toggle(clas);
+
+                }
             
             }
-            digits = [value];
-            clases = [];
+            digits = [];
+            clases = [value];
             prev = value;
 
 
@@ -206,8 +212,10 @@ $.prototype.toggleClass = function(...classNames) {
                 if(!this[digit].classList){
                     continue;
                 }
-                this[digit].classList.toggle(...clases);
-            
+                for(let clas of clases) {
+                    this[digit].classList.toggle(clas);
+
+                }            
             }
             
         }
@@ -228,7 +236,7 @@ $.prototype.toggleClass = function(...classNames) {
 
 $.prototype.someClass = function(...classNames) {
 
-    if(typeof(classNames[0]) == 'string') {
+    if(typeof(classNames[classNames.length - 1]) == 'string') {
 
         for(let i = 0; i <this.length; i++ ) {
             if(!this[i].classList){
@@ -242,25 +250,25 @@ $.prototype.someClass = function(...classNames) {
 
 
 
-    } else if(isFinite(classNames[0])){
+    } else if(isFinite(classNames[classNames.length - 1])){
         
         let digits = [];
         let clases = [];
-        let prev = 0;
+        let prev = 'string';
         for(let value of classNames) {
-            if (isFinite(value) && isFinite(prev) ){
+            if (isFinite(value)){
 
                 digits.push(+value);
                 prev = value;
 
 
-            } else if (typeof(value) === 'string') {
+            } else if (typeof(value) === 'string' && typeof(prev) === 'string') {
 
                 clases.push(value);
                 prev = value;
 
 
-            } else if (isFinite(value) && typeof(prev) === 'string') {
+            } else if (isFinite(prev) && typeof(value) === 'string') {
                 for(let digit of digits) {
                     if(!this[digit].classList){
                         continue;
@@ -270,8 +278,8 @@ $.prototype.someClass = function(...classNames) {
                     }
                 
                 }
-                digits = [value];
-                clases = [];
+                digits = [];
+                clases = [value];
                 prev = value;
 
 
@@ -312,7 +320,7 @@ $.prototype.someClass = function(...classNames) {
 
 $.prototype.everyClass = function(...classNames) {
 
-    if(typeof(classNames[0]) == 'string') {
+    if(typeof(classNames[classNames.length - 1]) == 'string') {
 
         for(let i = 0; i <this.length; i++ ) {
             if(!this[i].classList){
@@ -328,25 +336,27 @@ $.prototype.everyClass = function(...classNames) {
 
 
 
-    } else if(isFinite(classNames[0])){
+    } else if(isFinite(classNames[classNames.length - 1])){
         
         let digits = [];
         let clases = [];
-        let prev = 0;
+        let prev = 'string';
         for(let value of classNames) {
-            if (isFinite(value) && isFinite(prev) ){
+            if (isFinite(value)){
 
                 digits.push(+value);
                 prev = value;
 
 
-            } else if (typeof(value) === 'string') {
+
+
+            } else if (typeof(value) === 'string' && typeof(prev) === 'string') {
 
                 clases.push(value);
                 prev = value;
 
 
-            } else if (isFinite(value) && typeof(prev) === 'string') {
+            } else if (isFinite(prev) && typeof(value) === 'string') {
                 for(let digit of digits) {
                     if(!this[digit].classList){
                         continue;
@@ -358,8 +368,8 @@ $.prototype.everyClass = function(...classNames) {
                     }
                 
                 }
-                digits = [value];
-                clases = [];
+                digits = [];
+                clases = [value];
                 prev = value;
 
 

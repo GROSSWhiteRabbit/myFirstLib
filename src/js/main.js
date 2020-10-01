@@ -1,9 +1,10 @@
-import './lib/lib';
+import $ from './lib/lib';
 
-console.log($('div').hide().show( 1, 2, ).toggle().addClass( 'first',1, 2, )
-.on(['click', 'mouseenter'],consol)
-.off(['click', 'mouseenter'],consol, 3).click(consol, 3));  
-
+console.log($('button').eq(2));
+// console.log($('button'));
+// for(let key of $('button')) {
+//     console.log(key);
+// }
 function consol () {
-console.log("event");
+    console.log("event");
 }

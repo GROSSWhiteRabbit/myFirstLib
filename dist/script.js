@@ -2040,6 +2040,7 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.html = function (...elem
 
 _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.eq = function (i) {
   if (!isFinite(i)) {
+    console.error(`Invalid parameter of the "eq" function. Parameter: "${i}" not number or infinite`);
     return this;
   }
 
@@ -2052,6 +2053,50 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.eq = function (i) {
 
   this[0] = indexElement;
   this.length = 1;
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.index = function () {
+  const parent = this[0].parentNode,
+        child = [...parent.children];
+
+  const findMyIndex = item => {
+    return item == this[0];
+  };
+
+  return child.findIndex(findMyIndex);
+};
+
+_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.find = function (selector) {
+  if (typeof selector != 'string') {
+    console.error(`Invalid parameter of the "find" function. Parameter: "${selector}" not string`);
+    return this;
+  }
+
+  const copyObj = Object.assign({}, this);
+  let countElementFind = 0,
+      counter = 0;
+
+  for (let i = 0; i < copyObj.length; i++) {
+    const arr = copyObj[i].querySelectorAll(selector);
+
+    for (let j = 0; j < arr.length; j++) {
+      this[counter] = arr[j];
+      counter++;
+    }
+
+    countElementFind += arr.length;
+  }
+
+  this.length = countElementFind;
+  let objLength = Object.keys(this).length;
+
+  if (objLength > countElementFind + 1) {
+    for (; objLength >= countElementFind; objLength--) {
+      delete this[objLength];
+    }
+  }
+
   return this;
 };
 
@@ -3002,10 +3047,7 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.click = function (callBa
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
-console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').eq(2)); // console.log($('button'));
-// for(let key of $('button')) {
-//     console.log(key);
-// }
+console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').find('.nana'));
 
 function consol() {
   console.log("event");

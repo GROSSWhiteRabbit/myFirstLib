@@ -150,30 +150,226 @@ $.prototype.index = function() {
     return child.findIndex(findMyIndex);
 };
 
-$.prototype.find = function(selector) {
-    if(typeof(selector) != 'string') {
-        console.error(`Invalid parameter of the "find" function. Parameter: "${selector}" not string`);
-        return this;
-    }
+$.prototype.find = function(selector, ...numbers) {
     const copyObj = Object.assign({}, this);
     let countElementFind = 0,
         counter = 0;
 
-    for(let i = 0; i <copyObj.length; i++) {
-        const arr =  copyObj[i].querySelectorAll(selector);
-        for(let j = 0; j < arr.length; j++) {
-            this[counter] = arr[j];
-            counter++;
-        }
-        countElementFind += arr.length;
+    if (typeof(selector) != 'string') {
+        console.error(`Invalid parameter of the "closest" function. Parameter selector: "${selector}" not string`);
+        return this;
 
-    }
-    this.length = countElementFind;
-    let objLength = Object.keys(this).length;
-    if(objLength > countElementFind+1) {
-        for(;objLength >= countElementFind; objLength-- ) {
-            delete this[objLength];
+
+
+    } else if (numbers.length == 0) {
+
+        for(let i = 0; i <copyObj.length; i++) {
+            const arr =  copyObj[i].querySelectorAll(selector);
+            for(let j = 0; j < arr.length; j++) {
+                this[counter] = arr[j];
+                counter++;
+            }
+            countElementFind += arr.length;
+
         }
+        this.length = countElementFind;
+        let objLength = Object.keys(this).length;
+        if(objLength > countElementFind+1) {
+            for(;objLength >= countElementFind; objLength-- ) {
+                delete this[objLength];
+            }
+        }
+
+    } else if(numbers.length >0) {
+
+        for(let value of numbers) {
+
+
+            if(!isFinite(value) ) {
+                console.error(`Invalid parameter of the "closest" function. Parameter: "${value}" not number or infinite`);
+                continue;
+            }
+
+            if(!copyObj[value]) {
+                continue;
+            } 
+            const arr =  copyObj[value].querySelectorAll(selector);
+            for(let j = 0; j < arr.length; j++) {
+                this[counter] = arr[j];
+                counter++;
+            }
+            countElementFind += arr.length;
+
+        }
+        this.length = countElementFind;
+        let objLength = Object.keys(this).length;
+        if(objLength > countElementFind+1) {
+            for(;objLength >= countElementFind; objLength-- ) {
+                delete this[objLength];
+            }
+        }
+
+    } else {
+        console.error('Invalid parameters of the "someAttributes" function');
     }
+
     return this;
 };
+
+$.prototype.closest = function(selector, ...numbers) {
+    let arr = [];
+
+    if (typeof(selector) != 'string') {
+        console.error(`Invalid parameter of the "closest" function. Parameter: "${selector}" not string`);
+        return this;
+
+
+
+    } else if (numbers.length == 0) {
+
+        for(let i = 0; i < this.length; i++) {
+            let repeats = false;
+            if(!this[i].closest(selector)) {
+                repeats = true;
+            } else {
+                for(let j = 0; j < arr.length; j++) {
+                    if (this[i].closest(selector) === arr[j]){
+                        repeats = true;
+                    }                
+                }
+            }
+        
+            if(!repeats){
+        
+                arr.push(this[i].closest(selector));    
+            }
+        }
+        
+        for(let i = 0; i < arr.length; i++) {
+            this[i] = arr[i];
+
+        }
+
+        let objLength = Object.keys(this).length;
+        if(objLength > arr.length+1) {
+            for(;objLength >= arr.length; objLength-- ) {
+                delete this[objLength];
+            }
+        }
+
+        this.length = arr.length;
+
+    } else if(numbers.length >0) {
+
+        for(let value of numbers) {
+            let repeats = false;
+            
+            if(!isFinite(value) ) {
+                console.error(`Invalid parameter of the "closest" function. Parameter: "${value}" not number or infinite`);
+                continue;
+            }
+
+            if(!this[value] || !this[value].closest(selector)) {
+                continue;
+            } 
+
+            for(let j = 0; j < arr.length; j++) {
+                if (this[value].closest(selector) === arr[j]){
+                    repeats = true;
+                }                
+            }
+            
+        
+            if(!repeats){
+        
+                arr.push(this[value].closest(selector));    
+            }
+        }
+        
+        for(let i = 0; i < arr.length; i++) {
+            this[i] = arr[i];
+
+        }
+
+        let objLength = Object.keys(this).length;
+        if(objLength > arr.length+1) {
+            for(;objLength >= arr.length; objLength-- ) {
+                delete this[objLength];
+            }
+        }
+
+        this.length = arr.length;
+    } else {
+        console.error('Invalid parameters of the "someAttributes" function');
+    }
+
+
+    return this;
+
+};
+
+$.prototype.siblings = function(...numbers) {
+    const copyObj = Object.assign({}, this);
+    let countElementFind = 0,
+        counter = 0;
+
+    if (numbers.length == 0) {
+
+        for(let i = 0; i <copyObj.length; i++) {
+            const arr =  copyObj[i].parentNode.children;
+            for(let j = 0; j < arr.length; j++) {
+               if (copyObj[i] !== arr[j] ) {
+                   this[counter] = arr[j];
+                    counter++;
+                }
+            }
+            countElementFind += arr.length-1;
+
+        }
+        this.length = countElementFind;
+        let objLength = Object.keys(this).length;
+        if(objLength > countElementFind+1) {
+            for(;objLength >= countElementFind; objLength-- ) {
+                delete this[objLength];
+            }
+        }
+
+    } else if(numbers.length >0) {
+
+        for(let value of numbers) {
+
+
+            if(!isFinite(value) ) {
+                console.error(`Invalid parameter of the "closest" function. Parameter: "${value}" not number or infinite`);
+                continue;
+            }
+
+            if(!copyObj[value]) {
+                continue;
+            } 
+            const arr =  copyObj[value].parentNode.children;
+            for(let j = 0; j < arr.length; j++) {
+                if (copyObj[value] != arr[j] ) {
+                    this[counter] = arr[j];
+                     counter++;
+                 }
+            }
+            countElementFind += arr.length - 1;
+
+        }
+        this.length = countElementFind;
+        let objLength = Object.keys(this).length;
+        if(objLength > countElementFind+1) {
+            for(;objLength >= countElementFind; objLength-- ) {
+                delete this[objLength];
+            }
+        }
+
+    } else {
+        console.error('Invalid parameters of the "someAttributes" function');
+    }
+
+   
+    return this;
+};
+

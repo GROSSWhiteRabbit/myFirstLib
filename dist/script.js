@@ -1876,11 +1876,15 @@ module.exports = g;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const $ = function (selector) {
-  return new $.prototype.init(selector);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const $ = function (selector, ...numbers) {
+  return new $.prototype.init(selector, numbers);
 };
 
-$.prototype.init = function (selector) {
+$.prototype.init = function (selector, numbers) {
   if (!selector) {
     return this;
   }
@@ -1891,8 +1895,32 @@ $.prototype.init = function (selector) {
     return this;
   }
 
-  Object.assign(this, document.querySelectorAll(selector));
-  this.length = document.querySelectorAll(selector).length;
+  if (typeof selector != 'string') {
+    console.error(`Invalid parameter of the "init" function. Parameter selector: "${selector}" not string or DOM element`);
+    return;
+  }
+
+  if (numbers.length == 0) {
+    Object.assign(this, document.querySelectorAll(selector));
+    this.length = document.querySelectorAll(selector).length;
+  } else if (numbers.length > 0) {
+    const arr = [];
+
+    for (let value of numbers) {
+      if (!isFinite(value)) {
+        console.error(`Invalid parameter of the "init" function. Parameter: "${value}" not number or infinite`);
+        continue;
+      }
+
+      arr.push(document.querySelectorAll(selector)[value]);
+    }
+
+    Object.assign(this, arr);
+    this.length = arr.length;
+  } else {
+    console.error('Invalid parameters of the "init" function');
+  }
+
   return this;
 };
 
@@ -1917,6 +1945,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/handlers */ "./src/js/lib/modules/handlers.js");
 /* harmony import */ var _modules_attribute__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attribute */ "./src/js/lib/modules/attribute.js");
 /* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
+/* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/effects */ "./src/js/lib/modules/effects.js");
+
 
 
 
@@ -2067,34 +2097,212 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.index = function () {
   return child.findIndex(findMyIndex);
 };
 
-_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.find = function (selector) {
-  if (typeof selector != 'string') {
-    console.error(`Invalid parameter of the "find" function. Parameter: "${selector}" not string`);
-    return this;
-  }
-
+_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.find = function (selector, ...numbers) {
   const copyObj = Object.assign({}, this);
   let countElementFind = 0,
       counter = 0;
 
-  for (let i = 0; i < copyObj.length; i++) {
-    const arr = copyObj[i].querySelectorAll(selector);
+  if (typeof selector != 'string') {
+    console.error(`Invalid parameter of the "closest" function. Parameter selector: "${selector}" not string`);
+    return this;
+  } else if (numbers.length == 0) {
+    for (let i = 0; i < copyObj.length; i++) {
+      const arr = copyObj[i].querySelectorAll(selector);
 
-    for (let j = 0; j < arr.length; j++) {
-      this[counter] = arr[j];
-      counter++;
+      for (let j = 0; j < arr.length; j++) {
+        this[counter] = arr[j];
+        counter++;
+      }
+
+      countElementFind += arr.length;
     }
 
-    countElementFind += arr.length;
+    this.length = countElementFind;
+    let objLength = Object.keys(this).length;
+
+    if (objLength > countElementFind + 1) {
+      for (; objLength >= countElementFind; objLength--) {
+        delete this[objLength];
+      }
+    }
+  } else if (numbers.length > 0) {
+    for (let value of numbers) {
+      if (!isFinite(value)) {
+        console.error(`Invalid parameter of the "closest" function. Parameter: "${value}" not number or infinite`);
+        continue;
+      }
+
+      if (!copyObj[value]) {
+        continue;
+      }
+
+      const arr = copyObj[value].querySelectorAll(selector);
+
+      for (let j = 0; j < arr.length; j++) {
+        this[counter] = arr[j];
+        counter++;
+      }
+
+      countElementFind += arr.length;
+    }
+
+    this.length = countElementFind;
+    let objLength = Object.keys(this).length;
+
+    if (objLength > countElementFind + 1) {
+      for (; objLength >= countElementFind; objLength--) {
+        delete this[objLength];
+      }
+    }
+  } else {
+    console.error('Invalid parameters of the "someAttributes" function');
   }
 
-  this.length = countElementFind;
-  let objLength = Object.keys(this).length;
+  return this;
+};
 
-  if (objLength > countElementFind + 1) {
-    for (; objLength >= countElementFind; objLength--) {
-      delete this[objLength];
+_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.closest = function (selector, ...numbers) {
+  let arr = [];
+
+  if (typeof selector != 'string') {
+    console.error(`Invalid parameter of the "closest" function. Parameter: "${selector}" not string`);
+    return this;
+  } else if (numbers.length == 0) {
+    for (let i = 0; i < this.length; i++) {
+      let repeats = false;
+
+      if (!this[i].closest(selector)) {
+        repeats = true;
+      } else {
+        for (let j = 0; j < arr.length; j++) {
+          if (this[i].closest(selector) === arr[j]) {
+            repeats = true;
+          }
+        }
+      }
+
+      if (!repeats) {
+        arr.push(this[i].closest(selector));
+      }
     }
+
+    for (let i = 0; i < arr.length; i++) {
+      this[i] = arr[i];
+    }
+
+    let objLength = Object.keys(this).length;
+
+    if (objLength > arr.length + 1) {
+      for (; objLength >= arr.length; objLength--) {
+        delete this[objLength];
+      }
+    }
+
+    this.length = arr.length;
+  } else if (numbers.length > 0) {
+    for (let value of numbers) {
+      let repeats = false;
+
+      if (!isFinite(value)) {
+        console.error(`Invalid parameter of the "closest" function. Parameter: "${value}" not number or infinite`);
+        continue;
+      }
+
+      if (!this[value] || !this[value].closest(selector)) {
+        continue;
+      }
+
+      for (let j = 0; j < arr.length; j++) {
+        if (this[value].closest(selector) === arr[j]) {
+          repeats = true;
+        }
+      }
+
+      if (!repeats) {
+        arr.push(this[value].closest(selector));
+      }
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+      this[i] = arr[i];
+    }
+
+    let objLength = Object.keys(this).length;
+
+    if (objLength > arr.length + 1) {
+      for (; objLength >= arr.length; objLength--) {
+        delete this[objLength];
+      }
+    }
+
+    this.length = arr.length;
+  } else {
+    console.error('Invalid parameters of the "someAttributes" function');
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.siblings = function (...numbers) {
+  const copyObj = Object.assign({}, this);
+  let countElementFind = 0,
+      counter = 0;
+
+  if (numbers.length == 0) {
+    for (let i = 0; i < copyObj.length; i++) {
+      const arr = copyObj[i].parentNode.children;
+
+      for (let j = 0; j < arr.length; j++) {
+        if (copyObj[i] !== arr[j]) {
+          this[counter] = arr[j];
+          counter++;
+        }
+      }
+
+      countElementFind += arr.length - 1;
+    }
+
+    this.length = countElementFind;
+    let objLength = Object.keys(this).length;
+
+    if (objLength > countElementFind + 1) {
+      for (; objLength >= countElementFind; objLength--) {
+        delete this[objLength];
+      }
+    }
+  } else if (numbers.length > 0) {
+    for (let value of numbers) {
+      if (!isFinite(value)) {
+        console.error(`Invalid parameter of the "closest" function. Parameter: "${value}" not number or infinite`);
+        continue;
+      }
+
+      if (!copyObj[value]) {
+        continue;
+      }
+
+      const arr = copyObj[value].parentNode.children;
+
+      for (let j = 0; j < arr.length; j++) {
+        if (copyObj[value] != arr[j]) {
+          this[counter] = arr[j];
+          counter++;
+        }
+      }
+
+      countElementFind += arr.length - 1;
+    }
+
+    this.length = countElementFind;
+    let objLength = Object.keys(this).length;
+
+    if (objLength > countElementFind + 1) {
+      for (; objLength >= countElementFind; objLength--) {
+        delete this[objLength];
+      }
+    }
+  } else {
+    console.error('Invalid parameters of the "someAttributes" function');
   }
 
   return this;
@@ -2843,6 +3051,108 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.toggle = function (...n)
 
 /***/ }),
 
+/***/ "./src/js/lib/modules/effects.js":
+/*!***************************************!*\
+  !*** ./src/js/lib/modules/effects.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.animationOverTime = function (dur, cb, fin) {
+  let startTime;
+
+  const _animationOverTime = time => {
+    if (!startTime) {
+      startTime = time;
+    }
+
+    const timeElapsed = time - startTime,
+          progress = Math.min(timeElapsed / dur, 1);
+    cb(progress);
+
+    if (timeElapsed < dur) {
+      requestAnimationFrame(_animationOverTime);
+    } else {
+      if (typeof fin == 'function') {
+        fin();
+      }
+    }
+  };
+
+  return _animationOverTime;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeIn = function (dur = 1000, display = 'block', fin) {
+  if (!isFinite(dur)) {
+    console.error(`Invalid parameter of the "fadeIn" function. Parameter duration: "${dur}" not number or infinite`);
+    return this;
+  }
+
+  if (typeof display != 'string') {
+    console.error(`Invalid parameter of the "fadeIn" function. Parameter display: "${display}" is not a string `);
+    return this;
+  }
+
+  if (fin && typeof fin != 'function') {
+    console.error(`Invalid parameter of the "fadeIn" function. Parameter fin: "${fin}" is not a function `);
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    this[i].style.display = display;
+
+    const _fadeIn = progress => {
+      this[i].style.opacity = progress;
+    };
+
+    const ani = this.animationOverTime(dur, _fadeIn, fin);
+    requestAnimationFrame(ani);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeOut = function (dur = 1000, display = 'block', fin) {
+  if (!isFinite(dur)) {
+    console.error(`Invalid parameter of the "fadeIn" function. Parameter duration: "${dur}" not number or infinite`);
+    return this;
+  }
+
+  if (typeof display != 'string') {
+    console.error(`Invalid parameter of the "fadeIn" function. Parameter display: "${display}" is not a string `);
+    return this;
+  }
+
+  if (fin && typeof fin != 'function') {
+    console.error(`Invalid parameter of the "fadeIn" function. Parameter fin: "${fin}" is not a function `);
+    return this;
+  }
+
+  for (let i = 0; i < this.length; i++) {
+    this[i].style.display = display;
+
+    const fadeOut = progress => {
+      this[i].style.opacity = 1 - progress;
+
+      if (progress == 1) {
+        this[i].style.display = 'none';
+      }
+    };
+
+    const ani = this.animationOverTime(dur, fadeOut, fin);
+    requestAnimationFrame(ani);
+  }
+
+  return this;
+};
+
+/***/ }),
+
 /***/ "./src/js/lib/modules/handlers.js":
 /*!****************************************!*\
   !*** ./src/js/lib/modules/handlers.js ***!
@@ -3047,7 +3357,8 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.click = function (callBa
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
-console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').find('.nana'));
+console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button'));
+console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 1).fadeOut(3000));
 
 function consol() {
   console.log("event");

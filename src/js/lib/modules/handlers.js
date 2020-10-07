@@ -1,16 +1,22 @@
 
 import $ from '../core';
 
+$.prototype._checkIsFiniteAndExistenceDomElement = function(nameFunctions, value) {
+    if(!isFinite(value) ) {
+        console.error(`Invalid parameter of the "on" function. Parameter: "${value}" not number or infinite`);
+        return "error";
+    }
+
+    if(!this[Math.round(+value)]) {
+        console.error(`Element with index "${value}" not found of the "${nameFunctions}" function`);
+        return "error";
+    }
+};
+
 $.prototype.on = function(eventName, callBack, ...numbersElemets) {
     if(typeof(eventName) == 'string' && typeof(callBack) == 'function' && numbersElemets.length > 0 ){ 
         for(let value of numbersElemets) {
-            if(!isFinite(value) ) {
-                console.error(`Invalid parameter of the "on" function. Parameter: "${value}" not number or infinite`);
-                continue;
-            }
-
-            if(!this[Math.round(+value)]) {
-                console.error(`Element with index "${value}" not found of the "on" function`);
+            if(this._checkIsFiniteAndExistenceDomElement('on', value)=='error'){
                 continue;
             }
 
@@ -29,13 +35,7 @@ $.prototype.on = function(eventName, callBack, ...numbersElemets) {
 
     } else if(Array.isArray(eventName) && typeof(callBack) == 'function' && numbersElemets.length > 0) {
         for(let value of numbersElemets) {
-            if(!isFinite(value) ) {
-                console.error(`Invalid parameter of the "on" function. Parameter: "${value}" not number or infinite`);
-                continue;
-            }
-
-            if(!this[Math.round(+value)]) {
-                console.error(`Element with index "${value}" not found of the "on" function`);
+            if(this._checkIsFiniteAndExistenceDomElement('on', value) == 'error'){
                 continue;
             }
             for(let event of eventName ) {
@@ -82,13 +82,7 @@ $.prototype.on = function(eventName, callBack, ...numbersElemets) {
 $.prototype.off = function(eventName, callBack, ...numbersElemets) {
     if(typeof(eventName) == 'string' && typeof(callBack) == 'function' && numbersElemets.length > 0 ){ 
         for(let value of numbersElemets) {
-            if(!isFinite(value) ) {
-                console.error(`Invalid parameter of the "off" function. Parameter: "${value}" not number or infinite`);
-                continue;
-            }
-
-            if(!this[Math.round(+value)]) {
-                console.error(`Element with index "${value}" not found of the "off" function`);
+            if(this._checkIsFiniteAndExistenceDomElement('off', value)=='error'){
                 continue;
             }
 
@@ -107,13 +101,7 @@ $.prototype.off = function(eventName, callBack, ...numbersElemets) {
 
     } else if(Array.isArray(eventName) && typeof(callBack) == 'function' && numbersElemets.length > 0) {
         for(let value of numbersElemets) {
-            if(!isFinite(value) ) {
-                console.error(`Invalid parameter of the "off" function. Parameter: "${value}" not number or infinite`);
-                continue;
-            }
-
-            if(!this[Math.round(+value)]) {
-                console.error(`Element with index "${value}" not found of the "off" function`);
+            if(this._checkIsFiniteAndExistenceDomElement('off', value)=='error'){
                 continue;
             }
             for(let event of eventName ) {
@@ -163,13 +151,7 @@ $.prototype.click = function(callBack, ...numbersElemets) {
     if(typeof(callBack) == 'function' && numbersElemets.length > 0 ){ 
 
         for(let value of numbersElemets) {
-            if(!isFinite(value) ) {
-                console.error(`Invalid parameter of the "click" function. Parameter: "${value}" not number or infinite`);
-                continue;
-            }
-
-            if(!this[Math.round(+value)]) {
-                console.error(`Element with index "${value}" not found of the "click" function`);
+            if(this._checkIsFiniteAndExistenceDomElement('click', value)=='error'){
                 continue;
             }
 
@@ -181,6 +163,10 @@ $.prototype.click = function(callBack, ...numbersElemets) {
 
     } else if (typeof(callBack) == 'function') {
         for(let i = 0; i < this.length; i++) {
+            if(!this[i]) {
+                console.error(`Element with index "${i}" not found of the "click" function`);
+                continue;
+            }
             this[i].addEventListener('click', callBack, false);
         }
 
@@ -191,13 +177,7 @@ $.prototype.click = function(callBack, ...numbersElemets) {
         numbersElemets.push(callBack);
         
         for(let value of numbersElemets) {
-            if(!isFinite(value) ) {
-                console.error(`Invalid parameter of the "click" function. Parameter: "${value}" not number or infinite`);
-                continue;
-            }
-
-            if(!this[Math.round(+value)]) {
-                console.error(`Element with index "${value}" not found of the "click" function`);
+            if(this._checkIsFiniteAndExistenceDomElement('click', value)=='error'){
                 continue;
             }
 

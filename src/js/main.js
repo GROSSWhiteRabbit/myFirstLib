@@ -1,7 +1,15 @@
 import $ from './lib/lib';
-console.log($('button'));
+// console.log($('bottom', 0));
 
-console.log($('button',1).fadeOut(3000, ));
+$('button', 0).on('click',()=>{
+    console.log($('.w_500', 0).fadeToggle(200));
+});
+$('button', 1).click(()=>{
+    console.log($('.w_500', 1).fadeIn());
+});
+$('button', 2).click(()=>{
+    console.log($('.w_500').fadeToggle(1000, 'block'));
+});
 
 function consol () {
     console.log("event");

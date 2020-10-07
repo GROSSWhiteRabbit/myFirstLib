@@ -1,0 +1,115 @@
+
+.btn {
+    background-color: transparent;
+    border: 1px solid $primary;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: $dark;
+    text-align: center;
+    vertical-align: middle;
+    margin: 10px;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: all .2s;
+    outline: none;
+        &:hover {
+            background-color: lighten($primary, 10%);
+            color: #fff;
+            box-shadow:0 4px 10px rgba(0,0,0,.15);
+        }
+        &_primary {
+            background-color: $primary;
+            color: #fff;
+            &:hover {
+                background-color: darken($primary, 10%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+            }
+        }
+        &_warning {
+            background-color: $warning;
+            color: #fff;
+            border: 1px solid $warning;
+            &:hover {
+                background-color: darken($warning, 5%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+            }
+        }
+        &_dark {
+            background-color: $dark;
+            color: #fff;
+            border: 1px solid $dark;
+            &:hover {
+                background-color: darken($dark, 10%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+            }
+        }
+        &_seccess {
+            background-color: $seccess;
+            color: #fff;
+            border: 1px solid $seccess;
+            &:hover {
+                background-color: darken($seccess, 10%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+            }
+        }
+        &_danger {
+            background-color: $danger;
+            color: #fff;
+            border: 1px solid $danger;
+            &:hover {
+                background-color: darken($danger, 10%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+            }
+        }
+        &_outline_warning {
+            border: 1px solid $warning;
+            &:hover {
+                background-color: lighten($warning, 5%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+                color: #fff;
+
+
+            }
+        }
+        &_outline_dark {
+            border: 1px solid $dark;
+            &:hover {
+                background-color: lighten($dark, 10%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+                color: #fff;
+
+
+            }
+        }
+        &_outline_seccess {
+            border: 1px solid $seccess;
+            &:hover {
+                background-color: lighten($seccess, 10%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+                color: #fff;
+
+
+            }
+        }
+        &_outline_danger {
+            border: 1px solid $danger;
+            &:hover {
+                background-color: lighten($danger, 10%);
+                box-shadow:0 4px 10px rgba(0,0,0,.15);
+                color: #fff;
+
+
+            }
+        }
+        &-block {
+            display: block;
+            width: 100%;
+        }
+}

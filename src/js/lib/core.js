@@ -33,6 +33,10 @@ $.prototype.init = function(selector, numbers) {
                 console.error(`Invalid parameter of the "init" function. Parameter: "${value}" not number or infinite`);
                 continue;
             }
+            if(!document.querySelectorAll(selector)[value]) {
+                console.error(`Element with selector "${selector}" and index "${value}" not found of the "init" function`);
+                continue;
+            }
             arr.push(document.querySelectorAll(selector)[value]);
         }
 

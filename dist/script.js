@@ -1912,6 +1912,11 @@ $.prototype.init = function (selector, numbers) {
         continue;
       }
 
+      if (!document.querySelectorAll(selector)[value]) {
+        console.error(`Element with selector "${selector}" and index "${value}" not found of the "init" function`);
+        continue;
+      }
+
       arr.push(document.querySelectorAll(selector)[value]);
     }
 
@@ -3063,7 +3068,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
 
 
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.animationOverTime = function (dur, cb, fin) {
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype._animationOverTime = function (dur, cb, fin) {
   let startTime;
 
   const _animationOverTime = time => {
@@ -3087,65 +3092,86 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.animationOverTime = func
   return _animationOverTime;
 };
 
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeIn = function (dur = 1000, display = 'block', fin) {
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype._fadeIn = function (dur, display, fin, i) {
+  this[i].style.display = display;
+
+  const _fadeIn = progress => {
+    this[i].style.opacity = progress;
+  };
+
+  const ani = this._animationOverTime(dur, _fadeIn, fin);
+
+  requestAnimationFrame(ani);
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype._fadeOut = function (dur, display, fin, i) {
+  this[i].style.display = display;
+
+  const _fadeOut = progress => {
+    this[i].style.opacity = 1 - progress;
+
+    if (progress == 1) {
+      this[i].style.display = 'none';
+    }
+  };
+
+  const ani = this._animationOverTime(dur, _fadeOut, fin);
+
+  requestAnimationFrame(ani);
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype._checkParametrsFadeFunctions = function (nameFunctions, dur, display, fin) {
   if (!isFinite(dur)) {
-    console.error(`Invalid parameter of the "fadeIn" function. Parameter duration: "${dur}" not number or infinite`);
-    return this;
+    console.error(`Invalid parameter of the "${nameFunctions}" function. Parameter duration: "${dur}" not number or infinite`);
+    return "error";
   }
 
   if (typeof display != 'string') {
-    console.error(`Invalid parameter of the "fadeIn" function. Parameter display: "${display}" is not a string `);
-    return this;
+    console.error(`Invalid parameter of the "${nameFunctions}" function. Parameter display: "${display}" is not a string `);
+    return "error";
   }
 
   if (fin && typeof fin != 'function') {
-    console.error(`Invalid parameter of the "fadeIn" function. Parameter fin: "${fin}" is not a function `);
+    console.error(`Invalid parameter of the "${nameFunctions}" function. Parameter fin: "${fin}" is not a function `);
+    return "error";
+  }
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeIn = function (dur = 1000, display = 'block', fin) {
+  if (this._checkParametrsFadeFunctions('fadeIn', dur, display, fin) == 'error') {
     return this;
   }
 
   for (let i = 0; i < this.length; i++) {
-    this[i].style.display = display;
-
-    const _fadeIn = progress => {
-      this[i].style.opacity = progress;
-    };
-
-    const ani = this.animationOverTime(dur, _fadeIn, fin);
-    requestAnimationFrame(ani);
+    this._fadeIn(dur, display, fin, i);
   }
 
   return this;
 };
 
 _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeOut = function (dur = 1000, display = 'block', fin) {
-  if (!isFinite(dur)) {
-    console.error(`Invalid parameter of the "fadeIn" function. Parameter duration: "${dur}" not number or infinite`);
-    return this;
-  }
-
-  if (typeof display != 'string') {
-    console.error(`Invalid parameter of the "fadeIn" function. Parameter display: "${display}" is not a string `);
-    return this;
-  }
-
-  if (fin && typeof fin != 'function') {
-    console.error(`Invalid parameter of the "fadeIn" function. Parameter fin: "${fin}" is not a function `);
+  if (this._checkParametrsFadeFunctions('fadeOut', dur, display, fin) == 'error') {
     return this;
   }
 
   for (let i = 0; i < this.length; i++) {
-    this[i].style.display = display;
+    this._fadeOut(dur, display, fin, i);
+  }
 
-    const fadeOut = progress => {
-      this[i].style.opacity = 1 - progress;
+  return this;
+};
 
-      if (progress == 1) {
-        this[i].style.display = 'none';
-      }
-    };
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeToggle = function (dur = 1000, display = 'block', fin) {
+  if (this._checkParametrsFadeFunctions('fadeToggle', dur, display, fin) == 'error') {
+    return this;
+  }
 
-    const ani = this.animationOverTime(dur, fadeOut, fin);
-    requestAnimationFrame(ani);
+  for (let i = 0; i < this.length; i++) {
+    if (window.getComputedStyle(this[i]).opacity == '0') {
+      this._fadeIn(dur, display, fin, i);
+    } else {
+      this._fadeOut(dur, display, fin, i);
+    }
   }
 
   return this;
@@ -3168,16 +3194,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype._checkIsFiniteAndExistenceDomElement = function (nameFunctions, value) {
+  if (!isFinite(value)) {
+    console.error(`Invalid parameter of the "on" function. Parameter: "${value}" not number or infinite`);
+    return "error";
+  }
+
+  if (!this[Math.round(+value)]) {
+    console.error(`Element with index "${value}" not found of the "${nameFunctions}" function`);
+    return "error";
+  }
+};
+
 _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.on = function (eventName, callBack, ...numbersElemets) {
   if (typeof eventName == 'string' && typeof callBack == 'function' && numbersElemets.length > 0) {
     for (let value of numbersElemets) {
-      if (!isFinite(value)) {
-        console.error(`Invalid parameter of the "on" function. Parameter: "${value}" not number or infinite`);
-        continue;
-      }
-
-      if (!this[Math.round(+value)]) {
-        console.error(`Element with index "${value}" not found of the "on" function`);
+      if (this._checkIsFiniteAndExistenceDomElement('on', value) == 'error') {
         continue;
       }
 
@@ -3189,13 +3221,7 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.on = function (eventName
     }
   } else if (Array.isArray(eventName) && typeof callBack == 'function' && numbersElemets.length > 0) {
     for (let value of numbersElemets) {
-      if (!isFinite(value)) {
-        console.error(`Invalid parameter of the "on" function. Parameter: "${value}" not number or infinite`);
-        continue;
-      }
-
-      if (!this[Math.round(+value)]) {
-        console.error(`Element with index "${value}" not found of the "on" function`);
+      if (this._checkIsFiniteAndExistenceDomElement('on', value) == 'error') {
         continue;
       }
 
@@ -3235,13 +3261,7 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.on = function (eventName
 _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.off = function (eventName, callBack, ...numbersElemets) {
   if (typeof eventName == 'string' && typeof callBack == 'function' && numbersElemets.length > 0) {
     for (let value of numbersElemets) {
-      if (!isFinite(value)) {
-        console.error(`Invalid parameter of the "off" function. Parameter: "${value}" not number or infinite`);
-        continue;
-      }
-
-      if (!this[Math.round(+value)]) {
-        console.error(`Element with index "${value}" not found of the "off" function`);
+      if (this._checkIsFiniteAndExistenceDomElement('off', value) == 'error') {
         continue;
       }
 
@@ -3253,13 +3273,7 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.off = function (eventNam
     }
   } else if (Array.isArray(eventName) && typeof callBack == 'function' && numbersElemets.length > 0) {
     for (let value of numbersElemets) {
-      if (!isFinite(value)) {
-        console.error(`Invalid parameter of the "off" function. Parameter: "${value}" not number or infinite`);
-        continue;
-      }
-
-      if (!this[Math.round(+value)]) {
-        console.error(`Element with index "${value}" not found of the "off" function`);
+      if (this._checkIsFiniteAndExistenceDomElement('off', value) == 'error') {
         continue;
       }
 
@@ -3299,13 +3313,7 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.off = function (eventNam
 _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.click = function (callBack, ...numbersElemets) {
   if (typeof callBack == 'function' && numbersElemets.length > 0) {
     for (let value of numbersElemets) {
-      if (!isFinite(value)) {
-        console.error(`Invalid parameter of the "click" function. Parameter: "${value}" not number or infinite`);
-        continue;
-      }
-
-      if (!this[Math.round(+value)]) {
-        console.error(`Element with index "${value}" not found of the "click" function`);
+      if (this._checkIsFiniteAndExistenceDomElement('click', value) == 'error') {
         continue;
       }
 
@@ -3313,19 +3321,18 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.click = function (callBa
     }
   } else if (typeof callBack == 'function') {
     for (let i = 0; i < this.length; i++) {
+      if (!this[i]) {
+        console.error(`Element with index "${i}" not found of the "click" function`);
+        continue;
+      }
+
       this[i].addEventListener('click', callBack, false);
     }
   } else if (typeof callBack == 'number') {
     numbersElemets.push(callBack);
 
     for (let value of numbersElemets) {
-      if (!isFinite(value)) {
-        console.error(`Invalid parameter of the "click" function. Parameter: "${value}" not number or infinite`);
-        continue;
-      }
-
-      if (!this[Math.round(+value)]) {
-        console.error(`Element with index "${value}" not found of the "click" function`);
+      if (this._checkIsFiniteAndExistenceDomElement('click', value) == 'error') {
         continue;
       }
 
@@ -3356,9 +3363,17 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.click = function (callBa
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
+ // console.log($('bottom', 0));
 
-console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button'));
-console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 1).fadeOut(3000));
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 0).on('click', () => {
+  console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w_500', 0).fadeToggle(200));
+});
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 1).click(() => {
+  console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w_500', 1).fadeIn());
+});
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 2).click(() => {
+  console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w_500').fadeToggle(1000, 'block'));
+});
 
 function consol() {
   console.log("event");

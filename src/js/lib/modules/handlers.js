@@ -3,7 +3,7 @@ import $ from '../core';
 
 $.prototype._checkIsFiniteAndExistenceDomElement = function(nameFunctions, value) {
     if(!isFinite(value) ) {
-        console.error(`Invalid parameter of the "on" function. Parameter: "${value}" not number or infinite`);
+        console.error(`Invalid parameter of the "${nameFunctions}" function. Parameter: "${value}" not number or infinite`);
         return "error";
     }
 

@@ -1867,6 +1867,63 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./src/js/lib/components/dropdown.js":
+/*!*******************************************!*\
+  !*** ./src/js/lib/components/dropdown.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.dropdown = function () {
+  for (let i = 0; i < this.length; i++) {
+    const id = this[i].getAttribute('id');
+    this.click(() => {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(`[data-toggle-id="${id}"]`).fadeToggle(300);
+    }, i);
+  }
+};
+
+/***/ }),
+
+/***/ "./src/js/lib/components/modal.js":
+/*!****************************************!*\
+  !*** ./src/js/lib/components/modal.js ***!
+  \****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.modal = function () {
+  for (let i = 0; i < this.length; i++) {
+    const modal = this[i].getAttribute('data-target');
+    console.log(this[i]);
+    this.click(() => {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(modal).fadeIn(200);
+      document.body.style.overflow = 'hidden';
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(`${modal} [data-close]`).click(() => {
+        Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(modal).fadeOut(200);
+        document.body.style.overflow = '';
+      });
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(modal).click(e => {
+        if (e.target.classList.contains(modal.slice(1))) {
+          Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(modal).fadeOut(200);
+        }
+      });
+    }, i);
+  }
+};
+
+/***/ }),
+
 /***/ "./src/js/lib/core.js":
 /*!****************************!*\
   !*** ./src/js/lib/core.js ***!
@@ -1951,6 +2008,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_attribute__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attribute */ "./src/js/lib/modules/attribute.js");
 /* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
 /* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/effects */ "./src/js/lib/modules/effects.js");
+/* harmony import */ var _components_dropdown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/dropdown */ "./src/js/lib/components/dropdown.js");
+/* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/modal */ "./src/js/lib/components/modal.js");
+
+
 
 
 
@@ -3167,7 +3228,7 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeToggle = function (d
   }
 
   for (let i = 0; i < this.length; i++) {
-    if (window.getComputedStyle(this[i]).opacity == '0') {
+    if (window.getComputedStyle(this[i]).display == 'none') {
       this._fadeIn(dur, display, fin, i);
     } else {
       this._fadeOut(dur, display, fin, i);
@@ -3196,7 +3257,7 @@ __webpack_require__.r(__webpack_exports__);
 
 _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype._checkIsFiniteAndExistenceDomElement = function (nameFunctions, value) {
   if (!isFinite(value)) {
-    console.error(`Invalid parameter of the "on" function. Parameter: "${value}" not number or infinite`);
+    console.error(`Invalid parameter of the "${nameFunctions}" function. Parameter: "${value}" not number or infinite`);
     return "error";
   }
 
@@ -3363,7 +3424,7 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.click = function (callBa
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
- // console.log($('bottom', 0));
+ // console.log($('dropdown__toggle'));
 
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 0).on('click', () => {
   console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w_500', 0).fadeToggle(200));
@@ -3374,6 +3435,9 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 1).click(() =
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 2).click(() => {
   console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w_500').fadeToggle(1000, 'block'));
 });
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.dropdown__toggle').dropdown();
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-toggle="modal"]').modal();
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-toggle="modal"]').click();
 
 function consol() {
   console.log("event");

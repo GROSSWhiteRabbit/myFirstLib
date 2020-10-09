@@ -98,7 +98,7 @@ $.prototype.fadeToggle = function(dur = 1000, display = 'block', fin) {
 
 
     for (let i = 0; i < this.length; i++) {
-        if(window.getComputedStyle(this[i]).opacity == '0') {
+        if(window.getComputedStyle(this[i]).display == 'none') {
             this._fadeIn(dur, display, fin, i);
         }  else {
 

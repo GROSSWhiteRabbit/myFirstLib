@@ -1,0 +1,53 @@
+.modal {
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1060;
+    overflow: hidden;
+    display: none;
+    &__header {
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 30px;
+            background: transparent;
+            cursor: pointer;
+            color: #000;
+            opacity: 0.5;
+            background: transparent;
+        }
+    }
+    &__dialog {
+        
+        margin: 5% auto;
+        max-width: 500px;
+        
+    }
+    &__content {
+        width: 100%;
+        position: relative;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, .3);
+        border-radius: 4px;
+        overflow-y: auto;
+        max-height: 80vh;
+    }
+    &__title {
+        font-size: 24px;
+        font-weight: 500;
+        padding: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, .15);
+    }
+    &__body {
+        padding: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, .15);
+    }
+    &__footer {
+        padding: 20px;
+    }
+    
+}

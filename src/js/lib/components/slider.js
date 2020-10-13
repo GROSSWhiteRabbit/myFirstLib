@@ -11,7 +11,6 @@ $.prototype.slider= function() {
 
         field.style.width = 100 * slides.length + '%';
         slides.forEach(slide => {
-            console.log(width);
             slide.style.width = width ;
         });
         const _toSlide = (j) =>  {

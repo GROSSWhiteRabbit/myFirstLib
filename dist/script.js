@@ -2603,7 +2603,6 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.slider = function () {
     let index = 0;
     field.style.width = 100 * slides.length + '%';
     slides.forEach(slide => {
-      console.log(width);
       slide.style.width = width;
     });
 
@@ -2693,7 +2692,7 @@ $.prototype.init = function (selector, numbers) {
     return this;
   }
 
-  if (typeof selector != 'string') {
+  if (selector && typeof selector != 'string') {
     console.error(`Invalid parameter of the "init" function. Parameter selector: "${selector}" not string or DOM element`);
     return;
   }
@@ -2755,6 +2754,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_accordion__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/accordion */ "./src/js/lib/components/accordion.js");
 /* harmony import */ var _components_accordion__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_components_accordion__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _components_slider__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/slider */ "./src/js/lib/components/slider.js");
+/* harmony import */ var _services_request__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/request */ "./src/js/lib/services/request.js");
+
 
 
 
@@ -4162,6 +4163,60 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.click = function (callBa
 
 /***/ }),
 
+/***/ "./src/js/lib/services/request.js":
+/*!****************************************!*\
+  !*** ./src/js/lib/services/request.js ***!
+  \****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.get = async function (url, dataTypeAnswer = 'json') {
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`could not feth ${url}, status:${res.status}`);
+  }
+
+  switch (dataTypeAnswer) {
+    case 'json':
+      return await res.json();
+
+    case 'text':
+      return await res.text();
+
+    case 'blob':
+      return await res.blob();
+  }
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.post = async function (url, data, dataTypeAnswer = 'json') {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: data
+  });
+
+  switch (dataTypeAnswer) {
+    case 'json':
+      return await res.json();
+
+    case 'text':
+      return await res.text();
+
+    case 'blob':
+      return await res.blob();
+  }
+};
+
+/***/ }),
+
 /***/ "./src/js/main.js":
 /*!************************!*\
   !*** ./src/js/main.js ***!
@@ -4197,9 +4252,12 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-toggle="modal"]'
 });
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-tabpanel] .tab__item').tab();
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.accordion__head').accordion();
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.carusel').slider(); // function consol () {
-//     console.log("event");
-// }
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.carusel').slider();
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])().post('https://jsonplaceholder.typicode.com/posts', JSON.stringify({
+  lala: "tralala"
+})).then(res => {
+  console.log(res);
+});
 
 /***/ })
 

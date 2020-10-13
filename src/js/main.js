@@ -39,6 +39,6 @@ $('[data-tabpanel] .tab__item').tab();
 $('.accordion__head').accordion();
 
 $('.carusel').slider();
-// function consol () {
-//     console.log("event");
-// }
+$().post('https://jsonplaceholder.typicode.com/posts',JSON.stringify({lala:"tralala"})).then(res=> {
+    console.log(res);
+});

@@ -15,7 +15,7 @@ $.prototype.init = function(selector, numbers) {
         return this;
     }
 
-    if(typeof(selector)!= 'string') {
+    if(selector && typeof(selector)!= 'string') {
         console.error(`Invalid parameter of the "init" function. Parameter selector: "${selector}" not string or DOM element`);
         return;
     }

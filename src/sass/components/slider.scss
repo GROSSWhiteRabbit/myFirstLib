@@ -1,0 +1,85 @@
+.carusel {
+    box-shadow: 4px 4px 18px rgba(0, 0, 0, 0.3);
+    position: relative;
+    margin: 20px auto;
+    width: 900px;
+    &__indicators {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+        z-index: 15;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        li {
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            padding: 4px 20px;
+            background: #ffffff;
+            opacity: 0.3;
+            background-clip: padding-box;
+            margin-right: 5px;
+            margin-left: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            &:hover {
+                opacity: 0.5;
+            }
+           
+        }
+        .active {
+            opacity: 1;
+        }
+    }
+    &__wrap {
+        height: 500px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+
+    }
+    &__field {
+        display: flex;
+        height: 100%;
+        transition: transform 0.4s ease;
+    }
+    &__item {   
+        height: 100%;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    &__prev ,&__next {
+        text-decoration: none;
+        position: absolute;
+        bottom:0;
+        top:0;
+        z-index: 15;
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        color: #fff;
+        background: rgba(0,0,0,0.3);
+        opacity: 0;
+        transition: all 0.3s;
+        &:hover {
+            opacity: 1;
+
+        }
+    }
+   
+    &__prev {
+        left: 0;
+    }
+
+    &__next{
+        right: 0;
+    }
+
+}

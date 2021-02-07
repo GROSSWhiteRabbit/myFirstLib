@@ -1,0 +1,39 @@
+section {
+
+    padding: 40px 20px ;
+}
+
+h1 {
+    font-size: 40px;
+    
+}
+
+h2{
+    font-size: 30px;
+}
+
+.card {
+    width: 10000px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+}
+input {
+    width: 280px;
+    height: 45px;
+    margin-right: 10px;
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 4px;
+
+}
+
+footer {
+    background: #000;
+    height: 80px;
+    /* color: red; */
+}

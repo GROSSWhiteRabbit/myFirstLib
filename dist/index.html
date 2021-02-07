@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <button class="btn btn_primary m_20 ">btn primary</button>
+        <button class="btn btn_seccess m_20">btn seccess</button>
+        <button class="btn btn_warning m_20">btn warning</button>
+
+
+        <!-- dropdown menu -->
+        <div class="dropdown">
+            <button class="btn btn_primary dropdown__toggle" id='dropdownMenuId'>Dropdown button</button>
+            <div class="dropdown__menu" data-toggle-id="dropdownMenuId">
+                <a href="#" class="dropdown__item">Action</a>
+                <a href="#" class="dropdown__item">Action 2</a>
+                <a href="#" class="dropdown__item">Action 3</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="btn btn_primary dropdown__toggle" id='dropdownMenuId2'>Dropdown button 2</button></button>
+            <div class="dropdown__menu" data-toggle-id="dropdownMenuId2">
+                <a href="#" class="dropdown__item">Action</a>
+                <a href="#" class="dropdown__item">Action 2</a>
+                <a href="#" class="dropdown__item">Action 3</a>
+            </div>
+        </div>
+
+        <div class="block_center w_500 mt_20">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum consequatur dignissimos asperiores, placeat
+            deserunt saepe fuga sequi obcaecati maxime sit dolorem rerum velit autem beatae distinctio eos nisi, enim
+            unde?
+            Recusandae commodi sapiente assumenda, doloribus velit iusto sunt in labore quos, reprehenderit quis
+            corrupti. Eum reprehenderit error maxime fuga omnis nihil cupiditate ab reiciendis tempora, ex ipsam sunt?
+            Nam, dolor!
+            Ipsam dolor maxime porro officia animi assumenda atque voluptates minus omnis, iste laboriosam. Nemo magni
+            deleniti iure fugiat dolore. Est, quaerat magnam? Necessitatibus, aut cupiditate. Tempora placeat rerum est
+            nemo.
+            Excepturi iste commodi similique recusandae delectus atque quidem maiores sunt voluptatem, praesentium dolor
+            laborum est quasi animi? Atque delectus mollitia necessitatibus reprehenderit vero minima deleniti. Odio
+            voluptates iusto eos non.
+            Pariatur voluptatem nisi, explicabo laboriosam iusto at recusandae earum accusamus harum blanditiis quae,
+            error quam itaque qui minus? Quos eaque porro, nisi ab nulla impedit vel suscipit doloremque nobis
+            consequuntur.
+        </div>
+        <div class="block_center w_500 mt_20">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum consequatur dignissimos asperiores, placeat
+            deserunt saepe fuga sequi obcaecati maxime sit dolorem rerum velit autem beatae distinctio eos nisi, enim
+            unde?
+            Recusandae commodi sapiente assumenda, doloribus velit iusto sunt in labore quos, reprehenderit quis
+            corrupti. Eum reprehenderit error maxime fuga omnis nihil cupiditate ab reiciendis tempora, ex ipsam sunt?
+            Nam, dolor!
+            Ipsam dolor maxime porro officia animi assumenda atque voluptates minus omnis, iste laboriosam. Nemo magni
+            deleniti iure fugiat dolore. Est, quaerat magnam? Necessitatibus, aut cupiditate. Tempora placeat rerum est
+            nemo.
+            Excepturi iste commodi similique recusandae delectus atque quidem maiores sunt voluptatem, praesentium dolor
+            laborum est quasi animi? Atque delectus mollitia necessitatibus reprehenderit vero minima deleniti. Odio
+            voluptates iusto eos non.
+            Pariatur voluptatem nisi, explicabo laboriosam iusto at recusandae earum accusamus harum blanditiis quae,
+            error quam itaque qui minus? Quos eaque porro, nisi ab nulla impedit vel suscipit doloremque nobis
+            consequuntur.
+        </div>
+    </div>
+
+    <!-- card -->
+    <div class="wrap d_f f_space_around">
+        <div class="card">
+            <img src="https://bipbap.ru/wp-content/uploads/2017/08/LEpwl8j7fQ.jpg" alt="">
+            <div class="card__body">
+                <div class="card__title">Card tittle</div>
+                <div class="card__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores accusantium
+                    animi quibusdam possimus.</div>
+                <button class="btn btn_primary card__btn" data-toggle='modal' data-target="#modal1">Card button</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://bipbap.ru/wp-content/uploads/2017/08/LEpwl8j7fQ.jpg" alt="">
+            <div class="card__body">
+                <div class="card__title">Card tittle 2</div>
+                <div class="card__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores accusantium
+                    animi quibusdam possimus.</div>
+                <button class="btn btn_primary card__btn" data-toggle='modal' data-target="#modal2">Card button</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://bipbap.ru/wp-content/uploads/2017/08/LEpwl8j7fQ.jpg" alt="">
+            <div class="card__body">
+                <div class="card__title">Card tittle 3</div>
+                <div class="card__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores accusantium
+                    animi quibusdam possimus.</div>
+                <button class="btn btn_primary card__btn" data-toggle='modal' data-target="#modal3">Card button</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- modal -->
+
+    <div class="modal " id='modal1'>
+        <div class="modal__dialog">
+            <div class="modal__content">
+
+                <div class="modal__header">
+                    <span class="close" data-close>&times;</span>
+                    <div class="modal__title">Modal title</div>
+                </div>
+                <div class="modal__body">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus labore inventore omnis nihil
+                    laboriosam provident deserunt fugit commodi, impedit asperiores debitis soluta, ipsa numquam neque,
+                    velit accusantium sapiente quasi vitae!
+                </div>
+                <div class="modal__footer">
+                    <button class="btn btn_seccess">Save change</button>
+                    <button class="btn btn_danger close" data-close>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Tabs -->
+
+    <div class="tab mt_20 mb_20 block_center">
+        <div class="tab__panel  " data-tabpanel>
+            <div class="tab__item tab__item_active">Content 1</div>
+            <div class="tab__item">Content 2</div>
+            <div class="tab__item">Content 3</div>
+        </div>
+        <div class="tab__content tab__content_active">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aut sunt
+            facilis a aperiam sint neque blanditiis voluptas iusto, fugit aliquam. Possimus placeat laboriosam aliquid
+            magnam, at incidunt cum repudiandae suscipit?
+            <br><br>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aut sunt facilis a aperiam sint neque blanditiis
+            voluptas iusto, fugit aliquam. Possimus placeat laboriosam aliquid magnam, at incidunt cum repudiandae
+            suscipit?
+        </div>
+        <div class="tab__content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam expedita
+            perspiciatis enim nostrum magnam minus vero error sint, maiores aspernatur atque excepturi facilis libero
+            maxime ex sit qui repudiandae placeat.
+            <br><br>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam expedita perspiciatis enim nostrum
+            magnam minus vero error sint, maiores aspernatur atque excepturi facilis libero maxime ex sit qui
+            repudiandae placeat.
+            <br><br>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam expedita perspiciatis enim nostrum
+            magnam minus vero error sint, maiores aspernatur atque excepturi facilis libero maxime ex sit qui
+            repudiandae placeat.
+        </div>
+        <div class="tab__content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ad nihil
+            pariatur dolorum natus ducimus est, molestiae laudantium placeat quaerat ratione exercitationem ipsam ipsum
+            repellendus suscipit quia ut beatae voluptas!
+        </div>
+    </div>
+
+    <!-- Accordion -->
+
+    <div class="accordion block_center mb_20">
+        <div class="accordion__head ">
+            <span>Colapse first element</span>
+        </div>
+        <div class="accordion__content">
+            <div class="accordion__inner">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit animi facere cum minus at, eaque
+                doloremque voluptate libero quidem corrupti dolorem, laudantium dolor quisquam delectus? Reiciendis sit
+                culpa eaque mollitia.
+            </div>
+        </div>
+
+        <div class="accordion__head ">
+            <span>Colapse second element</span>
+        </div>
+        <div class="accordion__content">
+            <div class="accordion__inner">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit animi facere cum minus at, eaque
+                doloremque voluptate libero quidem corrupti dolorem, laudantium dolor quisquam delectus? Reiciendis sit
+                culpa eaque mollitia.
+            </div>
+        </div>
+    </div>
+
+    <!-- Slider -->
+
+    <div class="carusel">
+        <ul class="carusel__indicators">
+            <li class="active" data-slide-to='0'></li>
+            <li data-slide-to='1'></li>
+            <li data-slide-to='2'></li>
+            <li data-slide-to='3'></li>
+        </ul>
+        <a href="#" class="carusel__prev">
+            <span class="crusel__prev-icon">&lt;</span>
+        </a>
+        <a href="#" class="carusel__next">
+            <span class="crusel__next-icon">&gt;</span>
+        </a>
+        <div class="carusel__wrap">
+            <div class="carusel__field">
+                <div class="carusel__item">
+                    <img src="https://i.pinimg.com/474x/ab/db/cb/abdbcb26d0ca80e1c2874827b67d3c59.jpg" alt="">
+                </div>
+
+                <div class="carusel__item">
+                    <img src="https://veryimportantlot.com/cache/gallery-lot/25878/921378_-1280x828_width_50.jpg?_="
+                        alt="">
+                </div>
+
+
+
+
+                <div class="carusel__item">
+                    <img src="https://cdn.pixabay.com/photo/2020/03/24/22/34/illustration-4965674_960_720.jpg" alt="">
+                </div>
+
+
+                <div class="carusel__item">
+                    <img src="https://static3.depositphotos.com/1000386/109/i/450/depositphotos_1092590-stock-photo-autumn-landscape-with-the-wood.jpg"
+                        alt="">
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src='script.js'></script>
+</body>
+
+</html>
